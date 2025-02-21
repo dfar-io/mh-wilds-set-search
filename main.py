@@ -50,7 +50,7 @@ def main():
     count = 0
     for combination in combinations_generator:
         helm, mail, braces, coil, greaves = combination
-        if count > 10000:
+        if count > 200:
             print ("limit reached")
             break
         result = Result(helm, mail, braces, coil, greaves)
