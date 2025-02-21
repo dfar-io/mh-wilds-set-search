@@ -31,7 +31,7 @@ class Result:
     def matches_search_criteria(self, search_criteria):
         combined_skills = self.get_combined_skills()
 
-        for skill in search_criteria:
+        for skill in search_criteria.skills:
             search_criteria_skill_name = skill['name']
             if search_criteria_skill_name not in combined_skills:
                 return False

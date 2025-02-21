@@ -5,9 +5,9 @@ class Armor:
         self.skills = skills
         self.rank = rank
     
-    def is_eligible(self, search_criteria_skill_names):
+    def is_eligible(self, search_criteria):
+        search_criteria_skill_names = [item["name"] for item in search_criteria.skills]
         skill_names = [item["name"] for item in self.skills]
         common_elements = set(skill_names) & set(search_criteria_skill_names)
-        print(self.rank)
         
-        return len(common_elements) > 0 or self.rank == 2
+        return len(common_elements) > 0 and self.rank == search_criteria.rank
