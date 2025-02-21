@@ -9,12 +9,35 @@ class Result:
         self.greaves = greaves
 
     def __repr__(self):
-        return f"{self.defense()}: {self.helm.name}, {self.mail.name}, {self.braces.name}, {self.coil.name}, {self.greaves.name}"
+        return f"{self.get_defense()}: {self.helm.name}, {self.mail.name}, {self.braces.name}, {self.coil.name}, {self.greaves.name}"
 
-    def defense(self):
+    def get_defense(self):
         return self.helm.defense + self.mail.defense + self.braces.defense + self.coil.defense + self.greaves.defense
+
+    def get_combined_skills(self):
+        noncombined_skills = self.helm.skills + self.mail.skills + self.braces.skills + self.coil.skills + self.greaves.skills
+
+        aggregated = {}
+        for item in noncombined_skills:
+            name = item["name"]
+            level = item["level"]
+            if name in aggregated:
+                aggregated[name] += level
+            else:
+                aggregated[name] = level
+
+        return aggregated
     
     def matches_search_criteria(self, search_criteria):
-        # leaving off here - take a look at the TypeScript code for reference
-        random_number = random.random() * 10
-        return random_number > 9
+        combined_skills = self.get_combined_skills()
+
+        for skill in search_criteria:
+            search_criteria_skill_name = skill['name']
+            if search_criteria_skill_name not in combined_skills:
+                return False
+
+            skill_level = combined_skills[skill['name']]
+            if skill_level < skill['level']:
+                return False
+
+        return True
