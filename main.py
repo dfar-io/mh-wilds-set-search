@@ -33,8 +33,12 @@ def main():
         legs = [Armor(item["name"], item["baseDefense"], item["skills"], item['rank']) for item in legsData]
 
     search_criteria = SearchCriteria([
-        { 'name': 'Quick Sheathe', 'level': 3 },
-        { 'name': 'Focus', 'level': 3 }
+        { 'name': 'Quick Sheathe', 'level': 2 },
+        { 'name': 'Focus', 'level': 3 },
+        { 'name': 'Evade Extender', 'level': 1 },
+        { 'name': 'Critical Eye', 'level': 1 },
+        { 'name': 'Peak Performance', 'level': 1 },
+        { 'name': 'Maximum Might', 'level': 1 }
     ], 1)
 
     eligible_heads = [head for head in heads if head.is_eligible(search_criteria)]
@@ -62,9 +66,9 @@ def main():
 
     results.sort(key=lambda r: r.get_defense())
     for result in results:
+        print()
         print(result)
         print(result.get_combined_skills())
-        print()
 
     end = time.time()
     length = end - start
