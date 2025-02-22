@@ -16,36 +16,35 @@ def progress_bar(iteration, total, length = 50):
 def main():
     start = time.time()
 
-    with open('helms.json', 'r') as file:
-        helmData = json.load(file)
-        helms = [Armor(item["name"], item["baseDefense"], item["skills"], item['rank']) for item in helmData]
-    with open('mails.json', 'r') as file:
-        mailData = json.load(file)
-        mails = [Armor(item["name"], item["baseDefense"], item["skills"], item['rank']) for item in mailData]
-    with open('braces.json', 'r') as file:
-        braceData = json.load(file)
-        braces = [Armor(item["name"], item["baseDefense"], item["skills"], item['rank']) for item in braceData]
-    with open('coils.json', 'r') as file:
-        coilData = json.load(file)
-        coils = [Armor(item["name"], item["baseDefense"], item["skills"], item['rank']) for item in coilData]
-    with open('greaves.json', 'r') as file:
-        greaveData = json.load(file)
-        greaves = [Armor(item["name"], item["baseDefense"], item["skills"], item['rank']) for item in greaveData]
+    with open('head.json', 'r') as file:
+        headData = json.load(file)
+        heads = [Armor(item["name"], item["baseDefense"], item["skills"], item['rank']) for item in headData]
+    with open('chest.json', 'r') as file:
+        chestData = json.load(file)
+        chests = [Armor(item["name"], item["baseDefense"], item["skills"], item['rank']) for item in chestData]
+    with open('arms.json', 'r') as file:
+        armsData = json.load(file)
+        arms = [Armor(item["name"], item["baseDefense"], item["skills"], item['rank']) for item in armsData]
+    with open('waist.json', 'r') as file:
+        waistData = json.load(file)
+        waists = [Armor(item["name"], item["baseDefense"], item["skills"], item['rank']) for item in waistData]
+    with open('legs.json', 'r') as file:
+        legsData = json.load(file)
+        legs = [Armor(item["name"], item["baseDefense"], item["skills"], item['rank']) for item in legsData]
 
     search_criteria = SearchCriteria([
-        { 'name': 'Attack Boost', 'level': 7 },
-        { 'name': 'Critical Eye', 'level': 7 },
-        { 'name': 'Weakness Exploit', 'level': 3 }
-    ], 2)
+        { 'name': 'Quick Sheathe', 'level': 3 },
+        { 'name': 'Focus', 'level': 3 }
+    ], 1)
 
-    eligible_helms = [helm for helm in helms if helm.is_eligible(search_criteria)]
-    eligible_mails = [mail for mail in mails if mail.is_eligible(search_criteria)]
-    eligible_braces = [brace for brace in braces if brace.is_eligible(search_criteria)]
-    eligible_coils = [coil for coil in coils if coil.is_eligible(search_criteria)]
-    eligible_greaves = [greave for greave in greaves if greave.is_eligible(search_criteria)]
-    possible_combination_count = len(eligible_helms) * len(eligible_mails) * len(eligible_braces) * len(eligible_coils) * len(eligible_greaves)
+    eligible_heads = [head for head in heads if head.is_eligible(search_criteria)]
+    eligible_chests = [chest for chest in chests if chest.is_eligible(search_criteria)]
+    eligible_arms = [arm for arm in arms if arm.is_eligible(search_criteria)]
+    eligible_waists = [waist for waist in waists if waist.is_eligible(search_criteria)]
+    eligible_legs = [leg for leg in legs if leg.is_eligible(search_criteria)]
+    possible_combination_count = len(eligible_heads) * len(eligible_chests) * len(eligible_arms) * len(eligible_waists) * len(eligible_legs)
 
-    combinations_generator = itertools.product(eligible_helms, eligible_mails, eligible_braces, eligible_coils, eligible_greaves)
+    combinations_generator = itertools.product(eligible_heads, eligible_chests, eligible_arms, eligible_waists, eligible_legs)
     count = 0
     results = []
     print(f'possible combos: {possible_combination_count}')
@@ -64,6 +63,8 @@ def main():
     results.sort(key=lambda r: r.get_defense())
     for result in results:
         print(result)
+        print(result.get_combined_skills())
+        print()
 
     end = time.time()
     length = end - start
