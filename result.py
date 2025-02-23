@@ -41,6 +41,10 @@ class Result:
     
     def matches_search_criteria(self, search_criteria):
         combined_skills = self.get_combined_skills()
+        slots = self.get_slots()
+
+        if slots[0] < search_criteria.min_slots[0] or slots[1] < search_criteria.min_slots[1] or slots[2] < search_criteria.min_slots[2] or slots[3] < search_criteria.min_slots[3]:
+            return False
 
         for skill in search_criteria.skills:
             search_criteria_skill_name = list(skill)[0]

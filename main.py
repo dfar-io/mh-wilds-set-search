@@ -6,10 +6,16 @@ from search_criteria import SearchCriteria
 import itertools
 import time
 
-search_criteria = SearchCriteria([
-    { 'Quick Sheathe': 2 },
-    { 'Focus' : 3 }
-], 1)
+search_criteria = SearchCriteria(1,
+[
+    { 'Quick Sheathe': 3 },
+    { 'Focus' : 2 },
+    { 'Evade Extender' : 1 },
+    { 'Critical Eye' : 1 },
+    { 'Heroics' : 1 }
+],
+[0,1,0,0]
+)
 
 def main():
     start = time.time()
@@ -38,13 +44,13 @@ def main():
     results = []
     for index, combination in zip(range(possible_combination_count), combinations_generator):
         helm, mail, braces, coil, greaves = combination
-        if count > 200:
-            print ("limit reached")
-            break
         result = Result(helm, mail, braces, coil, greaves)
         if result.matches_search_criteria(search_criteria):
             results.append(result)
             count += 1
+
+        if count >= 200:
+            break
 
         progress_bar(index + 1, possible_combination_count)
 
@@ -56,12 +62,14 @@ def main():
     
     end = time.time()
     length = end - start
-    print("Process time:", length, "seconds")
+    print(f'matches: {count}')
+    print('time:', length, 'seconds')
 
 def progress_bar(iteration, total, length = 50):
     progress = int(length * iteration / total)
     bar = '=' * progress + '-' * (length - progress)
     percent = 100 * iteration / total
+
     sys.stdout.write(f'\r[{bar}] {percent:.2f}% Complete')
     sys.stdout.flush()
 
