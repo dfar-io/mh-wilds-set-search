@@ -6,15 +6,11 @@ from search_criteria import SearchCriteria
 import itertools
 import time
 
-search_criteria = SearchCriteria(1,
+search_criteria = SearchCriteria(
 [
     { 'Quick Sheathe': 3 },
-    { 'Focus' : 2 },
-    { 'Evade Extender' : 1 },
-    { 'Critical Eye' : 1 },
-    { 'Heroics' : 1 }
-],
-[0,1,0,0]
+    { 'Weakness Exploit': 5}
+]
 )
 
 def main():
@@ -23,11 +19,11 @@ def main():
     print(search_criteria)
 
     # load data
-    heads = read_armor_data('head.json')
-    chests = read_armor_data('chest.json')
-    arms = read_armor_data('arms.json')
-    waists = read_armor_data('waist.json')
-    legs = read_armor_data('legs.json')
+    heads = read_armor_data('HELM')
+    chests = read_armor_data('BODY')
+    arms = read_armor_data('ARM')
+    waists = read_armor_data('LEG')
+    legs = read_armor_data('WAIST')
     eligible_heads = [head for head in heads if head.is_eligible(search_criteria)]
     eligible_chests = [chest for chest in chests if chest.is_eligible(search_criteria)]
     eligible_arms = [arm for arm in arms if arm.is_eligible(search_criteria)]
@@ -73,21 +69,35 @@ def progress_bar(iteration, total, length = 50):
     sys.stdout.write(f'\r[{bar}] {percent:.2f}% Complete')
     sys.stdout.flush()
 
-def read_armor_data(json_filename):
-    with open(json_filename, 'r') as file:
+def read_armor_data(type):
+    with open('armor.json', 'r') as file:
         data = json.load(file)
-        return [Armor(
-            item["name"],
-            item['rank'],
-            item["baseDefense"],
-            item["slots"],
-            item["fireResistance"],
-            item["waterResistance"],
-            item["thunderResistance"],
-            item["iceResistance"],
-            item["dragonResistance"],
-            item["skills"]
-        ) for item in data]
+        armors = []
+        for item in data:
+            if item['type'] == type:
+                armor = Armor(
+                    item['name'],
+                    item['type'],
+                    item['defense'],
+                    item['fireRes'],
+                    item['waterRes'],
+                    item['thunderRes'],
+                    item['iceRes'],
+                    item['dragonRes'],
+                    item['slot1'],
+                    item['slot2'],
+                    item['slot3'],
+                    item.get('groupSkill'),
+                    item.get('skill1'),
+                    item.get('skillLevel1'),
+                    item.get('skill2'),
+                    item.get('skillLevel2'),
+                    item.get('skill3'),
+                    item.get('skillLevel3')
+                )
+                armors.append(armor)
+
+        return armors
 
 if __name__ == '__main__':
     sys.exit(main())
