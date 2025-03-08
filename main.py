@@ -10,8 +10,7 @@ search_criteria = SearchCriteria(
 [
     { 'Quick Sheathe': 3 },
     { 'Weakness Exploit': 5}
-]
-)
+])
 
 def main():
     start = time.time()
