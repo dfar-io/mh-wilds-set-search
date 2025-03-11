@@ -88,6 +88,7 @@ def read_armor_data(type):
                     item['slot1'],
                     item['slot2'],
                     item['slot3'],
+                    item.get('seriesSkill'),
                     item.get('groupSkill'),
                     item.get('skill1'),
                     item.get('skillLevel1'),
