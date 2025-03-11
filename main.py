@@ -8,9 +8,10 @@ import time
 
 search_criteria = SearchCriteria(
 [
-    { 'Arkveld\'s Hunger': 4 },
+    { 'Arkveld\'s Hunger': 2 },
     { 'Weakness Exploit': 5 },
-    { 'Quick Sheathe': 2 }
+    { 'Quick Sheathe': 2 },
+    { 'Agitator': 3 }
 ], [7, 1, 0])
 
 def main():
@@ -22,8 +23,8 @@ def main():
     heads = read_armor_data('HELM')
     chests = read_armor_data('BODY')
     arms = read_armor_data('ARM')
-    waists = read_armor_data('LEG')
-    legs = read_armor_data('WAIST')
+    waists = read_armor_data('WAIST')
+    legs = read_armor_data('LEG')
     eligible_heads = [head for head in heads if head.is_eligible(search_criteria)]
     eligible_chests = [chest for chest in chests if chest.is_eligible(search_criteria)]
     eligible_arms = [arm for arm in arms if arm.is_eligible(search_criteria)]
@@ -45,7 +46,7 @@ def main():
             results.append(result)
             count += 1
 
-        if count >= 200:
+        if count >= 10:
             break
 
         progress_bar(index + 1, possible_combination_count)
