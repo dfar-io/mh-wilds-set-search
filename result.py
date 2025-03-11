@@ -1,3 +1,5 @@
+import pprint
+
 class Result:
     def __init__(self, head, chest, arms, waist, legs):
         self.head = head
@@ -7,10 +9,19 @@ class Result:
         self.legs = legs
 
     def __repr__(self):
+        combined_slots = self.get_combined_slots()
+        skills_str = pprint.pformat(self.get_combined_skills())
         return (
-            f'{self.get_defense()}: {self.head.name}, {self.chest.name}, {self.arms.name}, {self.waist.name}, {self.legs.name}\n'
-            f'{self.get_combined_skills()}\n'
-            f'F: {self.head.fire} W: {self.head.water} T: {self.head.thunder} I: {self.head.ice} D: {self.head.dragon}\n'
+            f'{self.get_defense()} (F: {self.head.fire} W: {self.head.water} T: {self.head.thunder} I: {self.head.ice} D: {self.head.dragon})\n'
+            '=================================\n'
+            f'{self.head.name}\n'
+            f'{self.chest.name}\n'
+            f'{self.arms.name}\n'
+            f'{self.waist.name}\n'
+            f'{self.legs.name}\n'
+            '\n'
+            f'{skills_str}\n'
+            f'lv1: {combined_slots[0]}\nlv2: {combined_slots[1]}\nlv3: {combined_slots[2]}\n'
         )
 
     def get_defense(self):
@@ -31,6 +42,12 @@ class Result:
         return aggregated
     
     def matches_search_criteria(self, search_criteria):
+        # check slots
+        combined_slots = self.get_combined_slots()
+        if combined_slots[0] < search_criteria.min_slots[0] or combined_slots[1] < search_criteria.min_slots[1] or combined_slots[2] < search_criteria.min_slots[2]:
+            return False
+
+        # check skills
         combined_skills = self.get_combined_skills()
 
         for skill in search_criteria.skills:
