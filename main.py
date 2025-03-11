@@ -8,9 +8,10 @@ import time
 
 search_criteria = SearchCriteria(
 [
-    { 'Quick Sheathe': 3 },
-    { 'Weakness Exploit': 5}
-])
+    { 'Arkveld\'s Hunger': 4 },
+    { 'Weakness Exploit': 5 },
+    { 'Quick Sheathe': 2 }
+], [7, 1, 0])
 
 def main():
     start = time.time()
@@ -86,6 +87,7 @@ def read_armor_data(type):
                     item['slot1'],
                     item['slot2'],
                     item['slot3'],
+                    item.get('seriesSkill'),
                     item.get('groupSkill'),
                     item.get('skill1'),
                     item.get('skillLevel1'),
